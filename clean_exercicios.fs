@@ -1,23 +1,20 @@
-\ Responda os exercícios aqui. Lembre-se de remover qualquer código fora de
-\ definições antes de enviar a resposta final.
-
-\ ==============================================================================
-\ DEFINIÇÕES
-\ ==============================================================================
+\ Exercícios de Forth - Versão limpa para testes
 
 \ sort-two ( a b -- x y )
 \ Coloca os dois números em ordem crescente
 : sort-two
-    2dup > if swap then nip
+    2dup < if swap then
 ;
+
 \ sort-three ( a b c -- x y z )
 \ Coloca os três números em ordem crescente usando sort-two
 : sort-three
-    sort-two            \ ordena a e b
-    2dup rot            \ traz c para comparar com b
-    sort-two            \ ordena b e c
-    rot sort-two        \ ordena a e b novamente
+    sort-two
+    2dup rot
+    sort-two
+    rot sort-two
 ;
+
 \ dots ( n -- )
 \ Imprime uma linha com n pontos
 : dots
@@ -26,6 +23,7 @@
     loop
     cr
 ;
+
 \ ** ( a b -- a^b )
 \ Eleva a à potência b (assumindo b >= 0)
 : **
@@ -34,11 +32,13 @@
     loop
     swap drop
 ;
+
 \ 3dup ( a b c -- a b c a b c )
 \ Duplica os três números do topo da pilha
 : 3dup
     2 pick 2 pick 2 pick
 ;
+
 \ put ( ... a n -- ... a ... )
 \ Coloca a na posição n da pilha
 : put
@@ -55,6 +55,7 @@
         then
     then
 ;
+
 \ reverse ( ... n -- ... )
 \ Inverte a ordem dos últimos n números da pilha
 : reverse
@@ -65,6 +66,7 @@
         swap
     loop
 ;
+
 \ drop-many ( ... n -- ... )
 \ Remove os últimos n números da pilha
 : drop-many
@@ -72,6 +74,7 @@
         drop
     loop
 ;
+
 \ drop-at ( ... n -- ... )
 \ Remove o número na posição n da pilha
 : drop-at
@@ -88,6 +91,7 @@
         then
     then
 ;
+
 \ pop-at ( ... n -- ... a )
 \ Move o valor na posição n para o topo da pilha
 : pop-at
@@ -104,6 +108,7 @@
         then
     then
 ;
+
 \ print-change ( a -- )
 \ Imprime a quantidade de notas e moedas para compor o valor
 : print-change
@@ -116,6 +121,7 @@
     swap 2 mod dup 1 / ."  moeda(s) de 1" cr
     drop drop drop drop drop drop
 ;
+
 \ max-n ( ... n -- max )
 \ Deixa apenas o maior de n números na pilha
 : max-n
@@ -127,6 +133,7 @@
         swap max
     then
 ;
+
 \ reset ( ... -- )
 \ Remove todos os números da pilha
 : reset
@@ -134,6 +141,7 @@
         drop
     loop
 ;
+
 \ all-positive ( ... -- flag )
 \ Verifica se todos os números na pilha são positivos
 : all-positive
@@ -148,6 +156,7 @@
         then
     then
 ;
+
 \ all-sorted ( ... -- flag )
 \ Verifica se os números estão em ordem crescente
 : all-sorted
@@ -163,6 +172,7 @@
         then
     then
 ;
+
 \ filter-positive ( ... -- ... )
 \ Deixa apenas os números positivos na pilha (incluindo zero)
 : filter-positive
@@ -176,13 +186,3 @@
         filter-positive
     then
 ;
-
-
-\ ==============================================================================
-\ TESTES
-\ ==============================================================================
-\ Não esqueça de apagar ou comentar código fora das definições antes de enviar 
-\ a submissão final ou rodar os testes usando o pytest.
-
-1 2 3 sort-two .s cr \ deve imprimir "1 2 3"
-3 2 1 sort-two .s cr \ deve imprimir "2 3 1"

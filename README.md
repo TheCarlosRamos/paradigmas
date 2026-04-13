@@ -30,8 +30,5 @@ pytest --lf
 pytest --maxfail=1
 ```
 
-## Entrega
 
-A entrega será feita dia 23/04 em um formulário no aprender.unb.br. Mais
-detalhes em breve!
 

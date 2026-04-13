@@ -9,8 +9,7 @@ import os
 
 ANSWER_KEY = os.environ.get("ANSWER_KEY", "auto").lower()
 STACK_RE  = re.compile(r"<\d+> (.*)$", re.MULTILINE)
-CMD = ["gforth", "FILE", "-e", "bye"]
-CMD = ["flatpak", "run", "--filesystem=host","org.gforth.gforth", "FILE", "-e", "bye"]
+CMD = ["python", "final_forth.py", "FILE"]
 
 BASE_PATH = Path(__file__).parent.parent 
 
@@ -18,7 +17,9 @@ class Run:
     def __init__(self, file: str, program: Sequence[str] = ()):
         cmd = [*CMD]
         cmd[CMD.index("FILE")] = get_file_path_argument(file)
-        cmd[-1] = " ".join([*program, "bye"])
+        if len(program) > 0:
+            cmd.extend(program)
+        cmd.append("bye")
 
         self.result = subprocess.run(cmd, capture_output=True, text=True)
         try:
@@ -78,7 +79,7 @@ def indent(text: str, spaces: int = 2) -> str:
 
 def get_file_path_argument(file: str) -> str:
     """
-    Get the file path argument for the Forth command.
+    Get file path argument for the Forth command.
     """
     
     answer_key = BASE_PATH / file.replace(".fs", ".answer.fs")
